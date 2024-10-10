@@ -4,8 +4,10 @@ import connectDB from "@/src/utils/dbConnect";
 
 export async function GET(request,{params}){
     connectDB()
-
-    const todo = await Todo.findById(params.id)
+    console.log('id', params)
+    const todo = await Todo.find({
+        user: params.id
+    })
 
 
     return new NextResponse(

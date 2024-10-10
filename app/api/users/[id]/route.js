@@ -5,7 +5,7 @@ import connectDB from "@/src/utils/dbConnect";
 export async function GET(request,{params}) {
     connectDB()
 
-    const user = await User.findById(params.id)
+    const user = await User.findOne(params.email)
 
     return new NextResponse(
         JSON.stringify(user)
