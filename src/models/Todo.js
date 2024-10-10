@@ -7,6 +7,10 @@ const ToDoSchema = new mongoose.Schema({
         trim: true,
         maxLength: [40, "Title cannot be more than 40 characters"]
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     description: {
         type: String,
         required: [true, "Please add description"]
