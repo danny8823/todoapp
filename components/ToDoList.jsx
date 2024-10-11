@@ -1,11 +1,17 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-
+import { useRouter } from 'next/navigation'
 
 const ToDoList = ({user}) => {
     const [userId, setUserId] = useState('')
-    const [todo, setTodo] = useState('')
+    const [todo, setTodo] = useState()
     const [error, setError] = useState('')
+
+    const router = useRouter()
+
+    const handleRefresh = () => {
+        router.refresh()
+    }
 
     const getUSER = async() => {
         try {
@@ -38,31 +44,49 @@ const ToDoList = ({user}) => {
                 }
             })
 
-            if(!fetchToDo) {
-                setError('No todo')
-            }
-
             const fetchedTODO = await fetchToDo.json()
+
             setTodo(fetchedTODO)
         } catch (error) {
-            console.log(error)
+            setError(error.message)
         }
     }
     
+    const deleteTODO = async (id) => {
+        try {
+            const deletedToDo = await fetch(`api/todos/${id}`,{
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            
+            
+        } catch(error) {
+            setError(error.message)
+        }
+    }
     useEffect(() =>{
         getUSER()
         getTODO()
     },[])
+
   return (
     <div>
-        <h1>ToDoList</h1>
-        {todo.map((task)=> (
-            <div key = {task.id}>
-                <p>{task.title}</p>
-                <small>{task.description}</small>
-            </div>
-        ))}
-        {error && <div>{error}</div>}
+        <div>
+            <h1>ToDoList</h1>
+            {todo?.map((task)=> (
+                <div key = {task._id}>
+                    <p>{task.title}</p>
+                    <small>{task.description}</small>
+                    <button onClick={() => deleteTODO(task._id)}>Delete</button>
+                </div>
+            ))}
+            {error && <div>{error}</div>}
+        </div>
+        <div>
+            
+        </div>
     </div>
     
   )

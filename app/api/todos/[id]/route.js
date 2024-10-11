@@ -17,7 +17,7 @@ export async function GET(request,{params}){
 
 export async function DELETE(request,{params}) {
     connectDB()
-
+    console.log("route call for delete", params)
     const todo = await Todo.findByIdAndDelete(params.id)
 
     return new NextResponse(

@@ -1,7 +1,6 @@
 'use client'
 
 import React,{useState} from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
@@ -10,6 +9,7 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmpassword] = useState('')
     const [error, setError] = useState('')
+    const router = useRouter()
 
     const formHandler = async (e)=>{
         e.preventDefault()
