@@ -3,6 +3,7 @@ import React,{useState} from 'react'
 
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/navigation";
+import { loginACTION } from '@/app/actions';
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -13,25 +14,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-        try {
-            const res = await signIn('credentials', {
-                email,
-                password,
-                redirect: false
-            })
-
-            if(res.error) {
-                setError('Invalid Credentials')
-                return
-            }
-
-            router.replace('todo')
-        } catch (error) {
-            console.log(error)
-        }
+        loginACTION(email,password)
+        router.replace('todo')
     }
-
   return (
     <div>
         <form onSubmit = {handleSubmit}>

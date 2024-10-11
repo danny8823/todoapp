@@ -7,8 +7,7 @@ import { useSession } from "next-auth/react";
 
 export default function Todo () {
     const {data: session} = useSession()
-
-   
+  
     return (
         <div>
             <Nav/>
